@@ -1,0 +1,36 @@
+{
+  "env": {
+    "browser": true
+  },
+   "globals": {
+        "it": true,
+        "expect":true,
+        "describe":true
+    },
+  "parser": "babel-eslint",
+  "extends":
+  [
+    "standard",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "flowtype"
+  ],
+  "rules": {
+  "semi": [2, "always"],
+  "semi-spacing": [2, { "before": false, "after": true }],
+  "no-extra-semi": 2,
+  "no-multiple-empty-lines":['warn'],
+  'padded-blocks':['warn'],
+  "no-return-assign":['warn'],
+  'eqeqeq':['warn'],
+  'standard/computed-property-even-spacing':['warn'],
+  "indent": ["warn",4],
+  "no-trailing-spaces":['warn'],
+  'no-useless-constructor':['warn'],
+  "no-unused-vars": ["warn", { "vars": "all", "args": "after-used" }],
+  "space-before-function-paren": 0,
+  "spaced-comment": 0,
+  "quotes": [2, "single", {"avoidEscape": true, "allowTemplateLiterals": true}]
+  }
+}
