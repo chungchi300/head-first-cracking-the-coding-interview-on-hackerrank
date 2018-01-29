@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "jest-watch": "jest --watchAll",
-    "test": "npm run jest-watch"
+    "test": "$(npm bin)/jest --watchAll --runInBand --useStderr"
   },
   "jest": {
     "testRegex": "/test/*|/test/*/*|/test-for-you-don't-know-js/*/*",
