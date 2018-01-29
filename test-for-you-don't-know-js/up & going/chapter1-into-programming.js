@@ -1,9 +1,3 @@
-const EventEmitter = require('events');
-
-let debug = require('debug');
-var validator = require('validator');
-debug.enable('*');
-let LOGV = debug('test');
 import _ from 'lodash';
 describe('Basic', () => {
   it('test-statement', () => {
