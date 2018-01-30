@@ -221,11 +221,176 @@ describe('coercion & compare values', () => {
     expect(a == b).toBe(false); // false
   });
 });
-describe('variable', () => {});
-describe('conditional', () => {});
-describe('strict mode', () => {});
-describe('Functions As Values', () => {});
+describe('variable', () => {
+  //KNOWLEDGE:var scope,declare in outside of function = global scope,declared in function mean functional scope
+  it('hositing', () => {
+    //var appear in to global scope
+    var a = 2;
+
+    foo(); // works because `foo()`
+    // declaration is "hoisted"
+
+    function foo() {
+      //SKILL:Put Variable to the top to avoid variable hosting
+      a = 3;
+
+      expect(a).toBe(3);
+
+      var a; // declaration is "hoisted"
+      // to the top of `foo()`
+    }
+    expect(a).toBe(2);
+  });
+  it('access outside scope when cannot found', () => {
+    //var appear in to scope
+    var a = 2;
+
+    foo(); // works because `foo()`
+    // declaration is "hoisted"
+
+    function foo() {
+      a = 3;
+
+      expect(a).toBe(3);
+    }
+    expect(a).toBe(3);
+  });
+  it('nested scope', () => {
+    function foo() {
+      var a = 1;
+
+      function bar() {
+        var b = 2;
+
+        function baz() {
+          var c = 3;
+          expect(a).toBe(1);
+          expect(b).toBe(2);
+          expect(c).toBe(3);
+        }
+
+        baz();
+        expect(a).toBe(1);
+        expect(b).toBe(2);
+        try {
+          expect(c).toBe(2);
+          expect(true).toBe(false);
+        } catch (e) {
+          console.log(
+            'c is attached to barz() scope so there is noc in bar()',
+            e.message
+          );
+        }
+      }
+
+      bar();
+      expect(a).toBe(1);
+    }
+
+    foo();
+  });
+  it('bad practice', () => {
+    function foo() {
+      try {
+        a = 1; // `a` not formally declared
+        expect(true).toBe(false);
+      } catch (e) {
+        console.log('undeclared var is not allowed in strict mode', e.message);
+      }
+    }
+
+    foo();
+    // a; // 1 -- oops, auto global variable :(
+  });
+  it('block scoping', () => {
+    function foo() {
+      var result = [];
+      var a = 1;
+      //if b is var,it will be undefined and declared at foo
+
+      if (a >= 1) {
+        let b = 2;
+
+        while (b < 5) {
+          let c = b * 2;
+          b++;
+          result.push(a + c);
+        }
+      }
+      expect(String(result)).toBe('5,7,9');
+    }
+
+    foo();
+  });
+});
+describe('conditional', () => {
+  //TODO just basic control structure
+});
+describe('strict mode', () => {
+  //TODO strict mode always on top
+});
+describe('Functions As Values', () => {
+  it('static function declare is just declare one in global scope', () => {
+    function foo() {
+      // ..
+    }
+    expect(typeof foo).toBe('function');
+  });
+  it('static function equivalent', () => {
+    var foo = function() {
+      // ..
+    };
+    expect(typeof foo).toBe('function');
+  });
+  it('iife', () => {
+    var foo = function() {
+      expect(false).toBe(true);
+    };
+    (function IIFE() {
+      //DO execute
+      expect(true).toBe(true);
+    })();
+  });
+  it('iife can access and change global scope,but it do not declare variable in global scope', () => {
+    var a = 42;
+
+    (function IIFE() {
+      a = 10;
+      expect(a).toBe(10);
+    })();
+    expect(a).toBe(10);
+
+    expect(typeof IIFE === 'undefined').toBe(true);
+    // it('so do inner function if declared', () => {
+  });
+  it('iife can access and change global scope,but it do not declare variable in global scope', () => {
+    var a = 42;
+
+    function NIIFE() {
+      a = 10;
+      expect(a).toBe(10);
+    }
+    NIIFE();
+    //create the var in global
+    expect(a).toBe(10);
+
+    expect(typeof NIIFE === 'function').toBe(true);
+    // it('so do inner function if declared', () => {
+  });
+  //   var a = 42;
+  //
+  //   function NIIFE() {
+  //     var a = 10;
+  //     expect(a).toBe(10);
+  //   }
+  //   expect(a).toBe(42);
+  // });
+});
 describe('this Identifier', () => {});
 describe('Prototypes', () => {});
-describe('Polyfilling', () => {});
-describe('Transpiling', () => {});
+describe('Polyfilling', () => {
+  //TODO not tddable
+});
+describe('Transpiling', () => {
+  //TODO not tddable
+});
