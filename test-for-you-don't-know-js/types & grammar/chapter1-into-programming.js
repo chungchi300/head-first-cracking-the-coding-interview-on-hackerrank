@@ -1,4 +1,7 @@
+'use strict';
+
 import _ from 'lodash';
+
 describe('Basic', () => {
   it('test-statement', () => {
     const b = 4;
@@ -128,11 +131,49 @@ describe('Function&Scope', () => {
         var b = 2;
 
         // we can access both `a` and `b` here
-        console.log('global', global['a']);
+
         return a + b;
       }
 
       expect(inner()).toBe(3);
+
+      // we can only access `a` here
+      expect(a).toBe(1);
+    }
+    outer();
+  });
+  it('test-scope-double-declare-var', () => {
+    function outer() {
+      var a = 1;
+      var a = 3;
+      function inner() {
+        var b = 2;
+
+        // we can access both `a` and `b` here
+
+        return a + b;
+      }
+
+      expect(inner()).toBe(5);
+
+      // we can only access `a` here
+      expect(a).toBe(3);
+    }
+    outer();
+  });
+  it('test-scope-finding,the-closest-win', () => {
+    function outer() {
+      var a = 1;
+
+      function inner() {
+        var b = 2;
+
+        // we can access both `a` and `b` here
+        var a = 3;
+        return a + b;
+      }
+
+      expect(inner()).toBe(5);
 
       // we can only access `a` here
       expect(a).toBe(1);
