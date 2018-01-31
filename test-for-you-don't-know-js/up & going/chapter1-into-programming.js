@@ -225,7 +225,12 @@ describe('Function&Scope', () => {
       var b = 2;
       // console.log(window);
       //Cannot access a here because a belongs to outer
-      expect(typeof a !== 'undefined').toBe(false);
+      try {
+        console.log(a);
+        expect(false).toBe(true);
+      } catch (e) {
+        expect(e instanceof ReferenceError).toBe(true);
+      }
     }
     function outer() {
       var a = 1;

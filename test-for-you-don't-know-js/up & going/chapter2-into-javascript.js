@@ -359,8 +359,12 @@ describe('Functions As Values', () => {
       expect(a).toBe(10);
     })();
     expect(a).toBe(10);
+    try {
+      console.log(IIFE);
+    } catch (e) {
+      expect(e instanceof ReferenceError).toBe(true);
+    }
 
-    expect(typeof IIFE === 'undefined').toBe(true);
     // it('so do inner function if declared', () => {
   });
   it('iife can access and change global scope,but it do not declare variable in global scope', () => {
@@ -375,22 +379,116 @@ describe('Functions As Values', () => {
     expect(a).toBe(10);
 
     expect(typeof NIIFE === 'function').toBe(true);
-    // it('so do inner function if declared', () => {
   });
-  //   var a = 42;
-  //
-  //   function NIIFE() {
-  //     var a = 10;
-  //     expect(a).toBe(10);
-  //   }
-  //   expect(a).toBe(42);
-  // });
+  it('closure a bility that inner function can continue to access function scope and variable even once the function has finished running', () => {
+    function makeAdder(x) {
+      // parameter `x` is an inner variable
+
+      // inner function `add()` uses `x`, so
+      // it has a "closure" over it
+      function add(y) {
+        return y + x;
+      }
+
+      return add;
+    }
+    //KNOWLEDGE:Function called in javascript is all passed by copy
+    var oneAdder = makeAdder(1);
+    var twoAdder = makeAdder(2);
+
+    //IMAGINATION: function execution is creating the scope and copying the parameter and attached to scope object,
+    //If the return parameter is a function,and still accessing the scope,the scope is some how remembered
+
+    //the function(object) has the scope parameter to remember the calling environment
+    expect(oneAdder(2)).toBe(3);
+    expect(twoAdder(2)).toBe(4);
+  });
+  it('closure application pattern - module pattern', () => {
+    function User() {
+      var username = '';
+      var password = '';
+      function addScretMessage() {
+        return 'jeff';
+      }
+      function doLogin(user, pw) {
+        //can still access outer scope,username ,password
+        username = user;
+        password = pw;
+
+        // do the rest of the login work
+        password = addScretMessage() + pw;
+      }
+      function getUsernameAndPassword() {
+        return username + password;
+      }
+      //create an object with function
+      var publicAPI = {
+        login: doLogin,
+        getUsernameAndPassword: getUsernameAndPassword,
+      };
+
+      return publicAPI;
+    }
+
+    // create a `User` module instance
+    var fred = User();
+    expect(fred.getUsernameAndPassword()).toBe('');
+    fred.login('fred', '12Battery34!');
+    //A Skill to utilize closure property & scope model to create object that have hide implementation(e.g addScretMessage,username,password,they are stored at the outer.scope.object)
+    //A good way to mimick private and public property
+    expect(fred.getUsernameAndPassword()).toBe('fredjeff12Battery34!');
+  });
 });
-describe('this Identifier', () => {});
-describe('Prototypes', () => {});
+describe('this Identifier', () => {
+  it('this refer is really depend on who call him', () => {
+    function foo() {
+      // try {
+      return this.bar;
+    }
+
+    var bar = 'global';
+
+    var obj1 = {
+      bar: 'obj1',
+      foo: foo,
+    };
+
+    var obj2 = {
+      bar: 'obj2',
+    };
+
+    // --------
+
+    // foo(); // "global"
+    expect(obj1.foo()).toBe('obj1'); // "obj1"
+    expect(foo.call(obj2)).toBe('obj2'); // "obj2"
+    expect(typeof new foo()).toBe('object'); //new create an object
+  });
+});
+describe('Prototypes', () => {
+  it('access non exsiting property will find parent from chain', () => {
+    var foo = {
+      a: 42,
+      c: 'c in foo',
+    };
+
+    // create `bar` and link it to `foo`
+    var bar = Object.create(foo);
+
+    bar.b = 'hello world';
+    bar.c = 'c in bar';
+    expect(bar.b).toBe('hello world');
+    // cannot find a in bar,so access parent foo
+    expect(bar.a).toBe(42);
+    //already find c in bar,so stop access parent foo
+    expect(bar.c).toBe('c in bar');
+  });
+});
 describe('Polyfilling', () => {
   //TODO not tddable
+  //dynamically add function if not existed
 });
 describe('Transpiling', () => {
   //TODO not tddable
+  //transfer code
 });
