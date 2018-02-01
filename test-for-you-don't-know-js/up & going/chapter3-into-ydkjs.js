@@ -23,4 +23,7 @@ describe('YDKJS book,Read from top to bottom', () => {
     //linear reason-ability
     //ASM.js
   });
+  it('es6 and more', () => {
+    //js is evolving rapidly and promising
+  });
 });
