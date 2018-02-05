@@ -8,14 +8,8 @@
     "test": "$(npm bin)/jest --watchAll --runInBand --useStderr"
   },
   "jest": {
-    "testRegex": "/test/*|/test/*/*|/test-for-you-don't-know-js/*/*",
-    "testPathIgnorePatterns": [
-      "/test/utility/*",
-      "/test/__snapshots__/*"
-    ],
-    "modulePaths": [
-      "./node_modules"
-    ]
+    "testPathIgnorePatterns": ["/test/utility/*", "/test/__snapshots__/*"],
+    "modulePaths": ["./node_modules"]
   },
   "dependencies": {
     "debug": "^2.4.5",

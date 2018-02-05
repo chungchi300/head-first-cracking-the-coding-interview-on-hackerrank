@@ -1,9 +1,4 @@
-TDD to learn **[You Don't Know JS](https://github.com/getify/You-Dont-Know-JS)**
+Important Hints for hackerrank solutions(javascript)
 
-We don't know JavaScript, yet. But we will!
-
-We are programmer,we like get our hand dirty to learn something.
-
-One Day One Chapter(About 30Days)(6 Topic)
-
-https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20&%20closures/README.md#you-dont-know-js-scope--closures
+* Cracking the code interview(Help you get the Job)
+* Data structure(Help you get the Job Done)
