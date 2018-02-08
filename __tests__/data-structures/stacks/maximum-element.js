@@ -21,6 +21,7 @@ describe('All', () => {
 
         switch (type) {
           case 1:
+            //Math max is better then if else because it do type conversion to ensure it is number
             currentStackMax = Math.max(value, currentStackMax);
 
             stack.push(new StackNode(value, currentStackMax));
