@@ -10,7 +10,7 @@ describe('All', () => {
       dequeue(element) {
         this.elements.shift(element);
       }
-      getFirstElement() {
+      peek() {
         return this.elements[0];
       }
     }
@@ -34,7 +34,7 @@ describe('All', () => {
             queue.dequeue(value);
             break;
           case 3:
-            outputs.push(queue.getHeadElement());
+            outputs.push(queue.peek());
 
             break;
         }
