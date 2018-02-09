@@ -1,26 +1,40 @@
 describe('All', () => {
   it('All', () => {
+    class Queue {
+      constructor() {
+        this.elements = [];
+      }
+      queue(element) {
+        this.elements.push(element);
+      }
+      dequeue(element) {
+        this.elements.shift(element);
+      }
+      getFirstElement() {
+        return this.elements[0];
+      }
+    }
     function processData(input) {
       //Enter your code here
 
       const inputs = input.split('\n');
       const outputs = [];
       const numberOfQuery = Number(inputs[0]);
-      let queue = [];
+      let queue = new Queue();
       for (let i = 1; i <= numberOfQuery; i++) {
         const query = inputs[i];
         const type = Number(query.split(' ')[0]);
         const value = Number(query.split(' ')[1]);
         switch (type) {
           case 1:
-            queue.push(value);
+            queue.queue(value);
             break;
 
           case 2:
-            queue.shift(value);
+            queue.dequeue(value);
             break;
           case 3:
-            outputs.push(queue[0]);
+            outputs.push(queue.getHeadElement());
 
             break;
         }
