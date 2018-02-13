@@ -1,3 +1,11 @@
-Important Hints for hackerrank solutions(javascript)
+# Lesson & Hints
+**Gradual learning curve**
 
-* Cracking the code interview(Help you get the Job)
+- Data structure orientated
+- Algorithm highlighted first
+- Readability first(Do one thing at one time)
+
+# Test & Answer
+- 100% accepted by hackerrank
+- Self validated
+- Test Driven
