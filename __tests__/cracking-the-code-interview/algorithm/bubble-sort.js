@@ -1,23 +1,3 @@
-process.stdin.resume();
-process.stdin.setEncoding('ascii');
-
-var input_stdin = '';
-var input_stdin_array = '';
-var input_currentline = 0;
-
-process.stdin.on('data', function(data) {
-  input_stdin += data;
-});
-
-process.stdin.on('end', function() {
-  input_stdin_array = input_stdin.split('\n');
-  main();
-});
-
-function readLine() {
-  return input_stdin_array[input_currentline++];
-}
-
 /////////////// ignore above this line ////////////////////
 function moveBiggestElementToEndBySwap(a, i) {
   let swapOperation = 0;
@@ -38,15 +18,22 @@ function moveBiggestElementToEndBySwap(a, i) {
   }
   return swapOperation;
 }
-function main() {
-  var n = parseInt(readLine());
-  a = readLine().split(' ');
-  a = a.map(Number);
-  let swapOperation = 0;
-  for (let i = 0; i < a.length - 1; i++) {
-    swapOperation += moveBiggestElementToEndBySwap(a, i);
-  }
-  console.log(`Array is sorted in ${swapOperation} swaps.`);
-  console.log(`First Element: ${a[0]}`);
-  console.log(`Last Element: ${a[a.length - 1]}`);
-}
+describe('All', () => {
+  it('Full question', () => {
+    let a = [3, 2, 1];
+    let swapOperation = 0;
+    for (let i = 0; i < a.length - 1; i++) {
+      swapOperation += moveBiggestElementToEndBySwap(a, i);
+    }
+    expect(swapOperation).toBe(3);
+    expect(a).toEqual([1, 2, 3]);
+  });
+  it('moveBiggestElementToEndBySwap on first element', () => {
+    let a = [3, 2, 1];
+    let swapOperation = 0;
+    swapOperation += moveBiggestElementToEndBySwap(a, 0);
+
+    expect(swapOperation).toBe(2);
+    expect(a).toEqual([2, 1, 3]);
+  });
+});
