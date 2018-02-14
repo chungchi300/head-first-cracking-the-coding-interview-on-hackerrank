@@ -1,4 +1,5 @@
 # Lesson & Hints
+
 **Gradual learning curve**
 
 - Data structure orientated
