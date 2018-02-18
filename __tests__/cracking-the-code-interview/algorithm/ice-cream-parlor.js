@@ -25,6 +25,9 @@ class FlavourCombination {
     this.higherCostFlavour = Math.max(flavour1Name, flavour2Name);
   }
 }
+function findPairFlavours(complementCostOfFlavour, unmatchedFlavours) {
+  return unmatchedFlavours[complementCostOfFlavour];
+}
 //Classical two sum application
 function solve(flavours, money) {
   // Complete this function
@@ -33,7 +36,7 @@ function solve(flavours, money) {
   for (let i = 0; i < flavours.length; i++) {
     const complement = money - flavours[i];
 
-    if (unmatchedFlavours[complement] != undefined) {
+    if (findPairFlavours(complement, unmatchedFlavours) != undefined) {
       return new FlavourCombination(i + 1, unmatchedFlavours[complement] + 1);
     } else {
       //store the location
