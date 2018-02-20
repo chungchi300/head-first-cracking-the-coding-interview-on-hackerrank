@@ -17,7 +17,7 @@ describe('All', () => {
     players.sort((player1, player2) => {
       if (player1.score != player2.score) {
         if (player1.score - player2.score > 0) {
-          //By default is ascending,it should return 1(player 1 is bigger then player 2) if we but we want descending,so we reverse the result
+          //By default sort order is  ascending,it should return 1(player 1 is bigger then player 2) if we but we want descending,so we reverse the result
           return -1;
         } else {
           return 1;
