@@ -56,18 +56,15 @@ describe('All', () => {
           lowerHalfMaxHeap.add(higherHalfMinHeap.removeRoot());
         }
       } else if (lowerHalfMaxHeap.size() >= higherHalfMinHeap.size()) {
-        if (lowerHalfMaxHeap.peek() > number) {
-          lowerHalfMaxHeap.add(number);
-          higherHalfMinHeap.add(lowerHalfMaxHeap.removeRoot);
-        } else {
+        if (lowerHalfMaxHeap.peek() < number) {
           higherHalfMinHeap.add(number);
+        } else {
+          lowerHalfMaxHeap.add(number);
+          higherHalfMinHeap.add(lowerHalfMaxHeap.removeRoot());
         }
       } else {
         throw new Error('should not see this');
       }
-
-      console.log('minHeap', lowerHalfMaxHeap.toArray());
-      console.log('maxHeap', higherHalfMinHeap.toArray());
     }
 
     function medianTracker(array) {
@@ -76,6 +73,8 @@ describe('All', () => {
         console.log(getMedian().toFixed(1));
       }
     }
+
+    medianTracker([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
     // addNumberToHeaps(1);
     // addNumberToHeaps(2);
@@ -88,6 +87,5 @@ describe('All', () => {
     // addNumberToHeaps(9);
     // addNumberToHeaps(10);
     // expect(getMedian()).toBe(5.5);
-    medianTracker([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   });
 });
