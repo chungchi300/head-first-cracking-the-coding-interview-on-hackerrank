@@ -14,22 +14,24 @@ describe('All', () => {
       we will use array to implement the class
 https://www.youtube.com/watch?v=t0Cq6tVNRBA
     */
-    let minHeap = new buckets.Heap((a, b) => {
-      return a - b;
-    });
-    minHeap.add(4);
-    minHeap.add(1);
-    minHeap.add(2);
-    minHeap.add(3);
-    expect(minHeap.peek()).toBe(1);
+    // let minHeap = new buckets.Heap((a, b) => {
+    //   return a - b;
+    // });
+    // minHeap.add(4);
+    // minHeap.add(1);
+    // minHeap.add(2);
+    // minHeap.add(3);
+    // expect(minHeap.peek()).toBe(1);
     let maxHeap = new buckets.Heap((a, b) => {
       return -(a - b);
     });
-    maxHeap.add(3);
-    expect(maxHeap.peek()).toBe(3);
-    maxHeap.add(4);
     maxHeap.add(1);
-    maxHeap.add(2);
-    expect(maxHeap.peek()).toBe(4);
+
+    maxHeap.add(3);
+    maxHeap.add(5);
+    maxHeap.add(7);
+    maxHeap.add(9);
+    console.log('arr', maxHeap.toArray());
+    expect(maxHeap.peek()).toBe(9);
   });
 });
