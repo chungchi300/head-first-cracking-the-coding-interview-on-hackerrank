@@ -8,10 +8,16 @@
     "test": "$(npm bin)/jest --watchAll --runInBand --useStderr"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/test/utility/*", "/test/__snapshots__/*"],
-    "modulePaths": ["./node_modules"]
+    "testPathIgnorePatterns": [
+      "/test/utility/*",
+      "/test/__snapshots__/*"
+    ],
+    "modulePaths": [
+      "./node_modules"
+    ]
   },
   "dependencies": {
+    "buckets-js": "^1.98.2",
     "debug": "^2.4.5",
     "events": "^1.1.1",
     "fbjs": "^0.8.12",
