@@ -1,0 +1,86 @@
+// Compilation Successful
+// Input (stdin)
+// 5 1
+// 1 2 100
+// Your Output (stdout)
+// Slope List [ 100, 0, -100, 0, 0 ]
+// Actual List[100,100,0,0,0]
+//
+// Compilation Successful
+// Input (stdin)
+// 5 2
+// 1 2 100
+// 2 5 100
+// Your Output (stdout)
+// Slope List [ 100, 100, -100, 0, 0 ]
+// Actual List[100,200,100,100,100]
+//
+//
+// Compilation Successful
+// Input (stdin)
+// 5 3
+// 1 2 100
+// 2 5 100
+// 3 4 100
+// Your Output (stdout)
+// Slope List [ 100, 100, 0, 0, -100 ]
+// Actual List[100,200,200,200,100]
+```
+process.stdin.resume();
+process.stdin.setEncoding('ascii');
+
+var input_stdin = "";
+var input_stdin_array = "";
+var input_currentline = 0;
+
+process.stdin.on('data', function (data) {
+    input_stdin += data;
+});
+
+process.stdin.on('end', function () {
+    input_stdin_array = input_stdin.split("\n");
+    main();
+});
+
+function readLine() {
+    return input_stdin_array[input_currentline++];
+}
+
+/////////////// ignore above this line ////////////////////
+
+function main() {
+    var n_temp = readLine().split(' ');
+    var listSize = parseInt(n_temp[0]);
+    var lineNumber = parseInt(n_temp[1]);
+    let slopList = new Array();
+    for(let i = 0;i < listSize;i++){
+        slopList.push(0);
+    }
+
+    for(var a0 = 0; a0 < lineNumber; a0++){
+        var a_temp = readLine().split(' ');
+
+        const beginElementPos = parseInt(a_temp[0]);
+        const endElementPos = parseInt(a_temp[1]);
+        const addValue = parseInt(a_temp[2]);
+        slopList[beginElementPos-1] += addValue;
+        if (endElementPos<listSize){
+          slopList[endElementPos]-=addValue;
+        }
+    }
+    let actualList = new Array();
+    let sum = 0;
+    for (let i=0; i<listSize; i++) {
+        sum += slopList[i];
+        actualList.push(sum);
+    }
+
+   let max =  actualList.reduce((acc,val)=>{
+
+        return (acc>val)?acc:val;
+    },0);
+    console.log(max);
+
+}
+```
+dummy and slower version but still can pass all test
