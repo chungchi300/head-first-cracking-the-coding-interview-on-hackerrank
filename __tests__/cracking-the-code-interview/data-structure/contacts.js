@@ -1,54 +1,51 @@
-
-
 class TrieNode {
-    private HashMap<Character, TrieNode> children = new HashMap<>();
-    public int size;
-
-    public void putChildIfAbsent(char ch) {
-        children.putIfAbsent(ch, new TrieNode());
+  constructor(words) {
+    //store children(a character) in a map
+    this.children = {};
+    this.size = 0;
+  }
+  putChildIfAbsent(ch) {
+    if (this.children[ch] == undefined) {
+      this.children[ch] = new TrieNode();
     }
+  }
 
-    public TrieNode getChild(char ch) {
-        return children.get(ch);
-    }
+  getChild(ch) {
+    return this.children[ch];
+  }
 }
 
 class Trie {
-    TrieNode root = new TrieNode();
+  constructor(words = []) {
+    this.root = new TrieNode();
+    words.forEach(word => this.add(word));
+  }
 
-    Trie(){} // default constructor
+  insert(str) {
+    let curr = this.root;
 
-    Trie(String[] words) {
-        for (String word : words) {
-            add(word);
-        }
+    for (let i = 0; i < str.length; i++) {
+      let ch = str.charAt(i);
+      curr.putChildIfAbsent(ch);
+      curr = curr.getChild(ch);
+      curr.size++;
     }
+  }
+  //not good at find ''
+  find(prefix) {
+    let curr = this.root;
 
-    public void add(String str) {
-        TrieNode curr = root;
-        for (int i = 0; i < str.length(); i++) {
-            Character ch = str.charAt(i);
-            curr.putChildIfAbsent(ch);
-            curr = curr.getChild(ch);
-            curr.size++;
-        }
+    /* Traverse down tree to end of our prefix */
+    for (let i = 0; i < prefix.length; i++) {
+      let ch = prefix.charAt(i);
+      curr = curr.getChild(ch);
+      if (curr == null) {
+        return 0;
+      }
     }
-
-    public int find(String prefix) {
-        TrieNode curr = root;
-
-        /* Traverse down tree to end of our prefix */
-        for (int i = 0; i < prefix.length(); i++) {
-            Character ch = prefix.charAt(i);
-            curr = curr.getChild(ch);
-            if (curr == null) {
-                return 0;
-            }
-        }
-        return curr.size;
-    }
+    return curr.size;
+  }
 }
-
 
 describe('All', () => {
   it('All', () => {
@@ -57,7 +54,8 @@ describe('All', () => {
     trie.insert('hack');
     trie.insert('hackerrank');
 
-    expect(trie.find('hac').length).toEqual(2);
-    expect(trie.find('hak').length).toEqual(0);
+    expect(trie.find('hac')).toEqual(2);
+
+    expect(trie.find('hak')).toEqual(0);
   });
 });
