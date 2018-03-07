@@ -14,42 +14,107 @@ class MergeSort {
   }
 
   mergeSortReal(arr, helperArr, start, end) {
-    console.log('merge sort', arr, helperArr, start, end);
+    // console.log('merge sort', arr, helperArr, start, end);
     if (start < end) {
       let mid = parseInt((start + end) / 2);
-      /* basic knowledge->spliting arr don't cost calculator power,its just a memory operation*/
+      /* basic knowledge->spliting arr don't cost calculator power,
+      its just a memory operation
+
+      Also learn a skilled that stored manys small arrs in 1 arr
+      Small arr = arr+two position->start,end
+      */
+      /*
+      the recursion will end eventually
+      ,the result will be stored at arr
+      */
+      /*
+        divide to arr that contains 1 element that
+        simplified the algorithm
+        arr with one element is already sorted
+      */
       this.mergeSortReal(arr, helperArr, start, mid);
       this.mergeSortReal(arr, helperArr, mid + 1, end);
+      //merge start at bottom,it have 2 small arr,(start mid) + (mid + end)
       this.merge(arr, helperArr, start, mid, end);
     }
   }
+
+  //bottom sort of two sorted arr
   merge(arr, helperArr, start, mid, end) {
     for (let i = start; i <= end; i++) {
       // notice "i" goes from "start" to "end", not "0" to "arr.length"
+      //helperArr is a clone of sum of two small arr,
+      //in order to retrieve original data
       helperArr[i] = arr[i];
     }
 
     let curr = start;
+    //left start position is start
     let left = start;
+    //right start position is right
     let right = mid + 1;
 
-    /* Loop through helper[] left and right halves and continuously copy smaller element to arr[] */
+    /* Loop through helper[] left and right halves
+    and continuously copy smaller element to arr[]
+
+    belows is the algorithm that always consume one smaller arr,
+    it is way smarter then the one I think(and used in mergeTwoOrderedAscendingArray) always consume left first,
+    since because the left arr may be bigger array,
+
+     */
+    /*
+      quite if,remember both case are possible
+      * left > mid,utilize all left halve
+      * right > end,,utilize all right halve
+    */
     while (left <= mid && right <= end) {
       if (helperArr[left] <= helperArr[right]) {
+        //it is same as arr.push&&shifing from right halve
         arr[curr++] = helperArr[left++];
       } else {
-        /* Each time we choose element from right side, we count up how many elements
-               it is less than from left side. This is equivalent to counting swaps. */
+        /*
+         Each time we choose element from right side,
+         we count up how many elements
+         it is less than from left side.=>
+         (right element position swap(each swap can only move 1))
+         because adding from right & and distance it the swaps number it need
+         e.g
+         [1,2,3] , [1,3,4]
+         the right 1 need (2+1) swaps to the step
+         This is equivalent to counting swaps.
+          */
         this.swaps += mid + 1 - left;
+        //it is same as arr.push&&shifing from right halve
         arr[curr++] = helperArr[right++];
       }
     }
 
-    /* Copy remaining elements of left half. Right half elements are already in proper place */
+    /*
+    Copy remaining elements of left half
+    when left halve still have element
+    =>right > end, left still have remainings(that is all bigger),so added arr
+    Right half elements are already in proper place
+
+     */
     while (left <= mid) {
       arr[curr++] = helperArr[left++];
     }
+
+    /*hidden skip
+    /*
+    Copy remaining elements of left half
+    when left halve still have element
+    =>left > mid, right still have remainings(that is all bigger)
+    //the adding of right is unnecessary because
+    it is already in the arr & it is sorted!!
+
+
+    while (right <= end) {
+      arr[curr++] = helperArr[right++];
+    }
+     */
   }
+
   /*The reason why merged two ordered ascending arr is so effective is
    because one number can compare a group of number(*another ascending arr),
    **1 number compared by group** if the common factor for effective sorting algorithm
@@ -112,7 +177,7 @@ describe('All', () => {
     let ms = new MergeSort();
     ms.mergeSort(arr);
     expect(arr).toEqual([2, 4, 6, 8]);
-    // expect(ms.swaps).toBe(3);
+    expect(ms.swaps).toBe(4);
   });
   // it('moveBiggestElementToEndBySwap on first element', () => {
   //   let a = [3, 2, 1];
