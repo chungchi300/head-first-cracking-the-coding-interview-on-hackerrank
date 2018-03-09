@@ -31,6 +31,10 @@ class MergeSort {
         divide to arr that contains 1 element that
         simplified the algorithm
         arr with one element is already sorted
+
+
+        the bottom sort operation is n/2,each element compare with the next element
+
       */
       this.mergeSortReal(arr, helperArr, start, mid);
       this.mergeSortReal(arr, helperArr, mid + 1, end);
