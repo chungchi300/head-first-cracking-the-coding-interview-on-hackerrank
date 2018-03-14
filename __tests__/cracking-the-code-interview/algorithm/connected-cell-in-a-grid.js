@@ -28,9 +28,9 @@ function getMatrixConnectedSumAtSpecificPosition(matrix, x, y) {
   let size = 1;
   /*
   searching p = first looking point,c current point
-  p x x
-  x c x
-  x x x
+  p1 p4 p6
+  p2 c  p7
+  p3 p5 p8
   */
   for (let nextTraverseX = x - 1; nextTraverseX <= x + 1; nextTraverseX++) {
     for (let nextTraverseY = y - 1; nextTraverseY <= y + 1; nextTraverseY++) {
