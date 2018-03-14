@@ -26,7 +26,12 @@ function getMatrixConnectedSumAtSpecificPosition(matrix, x, y) {
   //switch to 0 so it would come back when travse
   matrix[x][y] = 0;
   let size = 1;
-  //searching
+  /*
+  searching p = first looking point,c current point
+  p x x
+  x c x
+  x x x
+  */
   for (let nextTraverseX = x - 1; nextTraverseX <= x + 1; nextTraverseX++) {
     for (let nextTraverseY = y - 1; nextTraverseY <= y + 1; nextTraverseY++) {
       //skip current,already counted
