@@ -31,6 +31,15 @@ function getMatrixConnectedSumAtSpecificPosition(matrix, x, y) {
   p1 p4 p6
   p2 c  p7
   p3 p5 p8
+
+  1 1 1  will it things that want to look back? no
+  1 1 0
+  0 1 1
+
+  1 1 1 because already counted and existed stack to follow them (Connected in size + stack) focus on the bottom row
+  1 0 0 value 1 => 1 1 1
+  0 1 1            1 0 0
+                   0 1 1
   */
   for (let nextTraverseX = x - 1; nextTraverseX <= x + 1; nextTraverseX++) {
     for (let nextTraverseY = y - 1; nextTraverseY <= y + 1; nextTraverseY++) {
