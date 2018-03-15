@@ -22,6 +22,7 @@ https://www.youtube.com/watch?v=t0Cq6tVNRBA
     // minHeap.add(2);
     // minHeap.add(3);
     // expect(minHeap.peek()).toBe(1);
+    //max heap
     let maxHeap = new buckets.Heap((a, b) => {
       return -(a - b);
     });

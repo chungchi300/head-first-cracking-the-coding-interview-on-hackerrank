@@ -40,6 +40,10 @@ function getMatrixConnectedSumAtSpecificPosition(matrix, x, y) {
   1 0 0 value 1 => 1 1 1
   0 1 1            1 0 0
                    0 1 1
+
+
+  imagination the stack=>every time recursive function turn itself to zero,
+  it already have function stack to search other direction staff                 
   */
   for (let nextTraverseX = x - 1; nextTraverseX <= x + 1; nextTraverseX++) {
     for (let nextTraverseY = y - 1; nextTraverseY <= y + 1; nextTraverseY++) {
