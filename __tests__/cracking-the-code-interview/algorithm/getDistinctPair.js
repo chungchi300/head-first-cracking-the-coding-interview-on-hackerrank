@@ -1,12 +1,7 @@
 function putPair(pairMap, complement, num) {
     let smallerNum = Math.min(complement, num);
-    //Utilize the map rewrite
-    let resultPairMap = { ...pairMap, [smallerNum]: Math.max(complement, num) };
-    return resultPairMap;
-}
-function getDistinctPair(nums, total) {
     /*
-    [1,46],[46,1] , they have similar common property that they have similar elements, we can use smallerNum as
+        [1,46],[46,1] , they have similar common property that they have similar elements, we can use smallerNum as
     **unique pair identifyer** to remove duplication when addition
 
         {
@@ -14,6 +9,13 @@ function getDistinctPair(nums, total) {
             1:46,
             even when 46,1 => add to map ,the smaller always on left to rewrite the logic
         }
+    Utilize the map rewrite
+    */
+    let resultPairMap = { ...pairMap, [smallerNum]: Math.max(complement, num) };
+    return resultPairMap;
+}
+function getDistinctPair(nums, total) {
+    /*
 
         1=>[1,]
         2=>[1,2]
