@@ -28,9 +28,9 @@ function isBalanced(previousChar, currentChar) {
 
   return false;
 }
-function isExpressionBalanced(expression) {
+function isValueBalanced(value) {
   const stack = new Stack();
-  const chars = expression.split('');
+  const chars = value.split('');
 
   for (let i = 0; i < chars.length; i++) {
     if (chars[i] == '{' || chars[i] == '[' || chars[i] == '(') {
@@ -52,15 +52,15 @@ function isExpressionBalanced(expression) {
 describe('All', () => {
   it('All', () => {
     expect(
-      isExpressionBalanced(
+      isValueBalanced(
         '(])[{{{][)[)])(]){(}))[{(})][[{)(}){[(]})[[{}(])}({)(}[[()}{}}]{}{}}()}{({}](]{{[}}(([{]'
       )
     ).toBe(false);
     expect(
-      isExpressionBalanced(
+      isValueBalanced(
         '[()][{}()][](){}([{}(())([[{}]])][])[]([][])(){}{{}{[](){}}}()[]({})[{}{{}([{}][])}]'
       )
     ).toBe(true);
-    expect(isExpressionBalanced('{{}(')).toBe(false);
+    expect(isValueBalanced('{{}(')).toBe(false);
   });
 });

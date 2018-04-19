@@ -10,6 +10,7 @@ describe('compose', () => {
         return seagulls + seagulls * 0.1;
     }
     it('seagull es5', () => {
+        //https://note.pcwu.net/2017/03/10/compose-function/
         //10 + 5 => 15, 15*1.5^3 = 50.625
         //The function that create new function[Tunnel that create function]
         function conjoinAndBreedFor3Generation(conjoin, breed) {
