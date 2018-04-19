@@ -6,6 +6,9 @@ function putPair(pairMap, complement, num) {
 }
 function getDistinctPair(nums, total) {
     /*
+    [1,46],[46,1] , they have similar common property that they have similar elements, we can use smallerNum as
+    **unique pair identifyer** to remove duplication when addition
+
         {
             //Key as the smaller value
             1:46,
