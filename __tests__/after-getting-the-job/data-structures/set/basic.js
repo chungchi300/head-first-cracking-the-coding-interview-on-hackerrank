@@ -14,6 +14,7 @@ describe('array-native & lodash', () => {
     mySet.add(o);
     mySet.add(o);
     //remember javascript o don't have implement the equals() function as java
+    //they use isEquals(a,b) to implement custom compare
     expect(mySet.size).toBe(4);
   });
 });
