@@ -44,4 +44,17 @@ describe("basic", () => {
 
     expect(indexes).toEqual(["0", "1", "2", "3"]);
   });
+  it("recursively transform field to new object", () => {
+    let floatBoundRect = {
+      x: 122.33,
+      y: 1233.33,
+      width: 300.33,
+      height: 30.33
+    };
+    let roundBoundRect = {};
+    for (let property in floatBoundRect) {
+      roundBoundRect[property] = Math.round(floatBoundRect[property]);
+    }
+    expect(roundBoundRect).toEqual({ x: 122, y: 1233, width: 300, height: 30 });
+  });
 });
