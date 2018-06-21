@@ -98,117 +98,7 @@ describe("async ", () => {
     expect(typeof oneMoreThanA === "function").toBe(false);
   });
   //In javascript.a  function that make function,the maked function remember the scope that are created
-  
-  it("test-es-6-sugar", () => {
-    class Company {
-      constructor(name, employee) {
-        this.name = name;
-        this.employee = employee;
-      }
-      info() {
-        return this.name + this.employee;
-      }
-    }
-    //change the prototype chain and the constructor assignment
-    class GovernmentCompany extends Company {
-      constructor(name, employee) {
-        super(name, employee);
-        this.name = "government" + this.name;
-        this.employee = "government" + this.employee;
-      }
-    }
-    class PrivateCompany extends Company {
-      constructor(name, employee) {
-        super(name, employee);
-        this.name = "private" + this.name;
-        this.employee = "private" + this.employee;
-      }
-    }
-    var company1 = new Company("Astri", "jeff chung");
-    var company2 = new GovernmentCompany("Astri2", "sss");
-    var company3 = new PrivateCompany("Astri3", "eee");
-    // same inheriance function template& same inheriance memory
-    expect(
-      company1.info === company2.info && company1.info === company3.info
-    ).toBe(true);
-    //
-    expect("Astri").toBe(company1.name);
-    expect("governmentAstri2").toBe(company2.name);
-    expect(company1 instanceof Company).toBe(true);
-    expect(company2 instanceof GovernmentCompany).toBe(true);
-    expect(company2 instanceof Company).toBe(true);
-    expect(company3 instanceof PrivateCompany).toBe(true);
-    expect(company3 instanceof Company).toBe(true);
-    // t.false(company2.close());
-  });
-  it("test-defensive-setter", () => {
-    class Person {
-      //remember setter always
-      constructor(fullName) {
-        //object instead on object prototype
-        this.fullName = fullName;
-      }
-      get fullName() {
-        return this.givenName + this.sureName;
-      }
-      set fullName(fullName) {
-        if (!validator.contains(fullName, " ")) {
-          throw new Error("fullName have no space");
-        }
-        this.givenName = fullName.split(" ")[0];
-        this.sureName = fullName.split(" ")[1];
-      }
-      set age(age) {
-        if (!validator.isInt(age + "")) {
-          throw new Error("age is not integer");
-        }
-        this._age = age;
-      }
-      get age() {
-        return this._age;
-      }
-    }
-    let jeff = new Person("Jeff Chung");
-    jeff.age = 12;
-    expect(12).toBe(jeff.age);
-    expect("Jeff").toBe(jeff.givenName);
-    expect("Chung").toBe(jeff.sureName);
-    try {
-      let wrongName = new Person("JeffChung");
-      expect(false).toBeTruthy();
-    } catch (e) {
-      expect(true).toBeTruthy();
-    }
-    try {
-      jeff.age = 12.5;
-      expect(false).toBeTruthy();
-    } catch (e) {
-      expect(true).toBeTruthy();
-    }
-  });
-  it("test-getter-and-setter", () => {
-    class Person {
-      constructor(givenName, sureName) {
-        //object instead on object prototype
-        this.givenName = givenName;
-        this.sureName = sureName;
-      }
-      get fullName() {
-        return this.givenName + this.sureName;
-      }
-      set fullName(fullName) {
-        this.givenName = fullName.split(" ")[0];
-        this.sureName = fullName.split(" ")[1];
-      }
-    }
-    let jeff = new Person("jeff", "chung");
-    expect("jeffchung").toBe(jeff.fullName);
-    expect("jeff").toBe(jeff.givenName);
-    expect("jeffchung").toBe(jeff.fullName);
-    jeff.fullName = "Jeff Chung";
-    expect("Jeff").toBe(jeff.givenName);
-    expect("Chung").toBe(jeff.sureName);
-  });
+
   it("test-array-spread-to-turn-array-to-multiple-array-params", () => {
     class Person {
       constructor(givenName, surnName) {
@@ -223,22 +113,7 @@ describe("async ", () => {
     expect("jeff").toBe(jeff.givenName);
     expect("chung").toBe(jeff.sureName);
   });
-  it("test-object-deserializer", () => {
-    let info = { sureName: "jeff", givenName: "chung" };
-    //object spread used to create object
-    let { sureName, givenName } = info;
-    expect(sureName).toBe("jeff");
-    expect(givenName).toBe("chung");
-  });
-  it("test-object-spread-to-create-object", () => {
-    let info = { sureName: "jeff", givenName: "chung" };
-    //object spread used to create object
-    let jeff = { ...info, fullName: "jeffchung", sureName: "superjeff" };
 
-    expect(jeff.givenName).toBe("chung");
-    expect(jeff.sureName).toBe("superjeff");
-    expect(jeff.fullName).toBe("jeffchung");
-  });
   //jsx has spread operator but it is not the same implementation,the Compiler do completely different job
   it("call-function-using-object-property-as-parameter-which-is-useless-because-function-based-on-position", () => {});
   it("test-array-rest-to-turn-params-in-function-to-arr", () => {
