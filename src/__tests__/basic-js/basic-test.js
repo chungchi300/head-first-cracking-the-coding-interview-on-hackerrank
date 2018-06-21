@@ -5,7 +5,7 @@ var validator = require("validator");
 debug.enable("*");
 let LOGV = debug("test");
 import _ from "lodash";
-describe("async & oop & closure", () => {
+describe("async ", () => {
   it("test-sample", () => {
     expect(true).toBeTruthy();
   });
@@ -83,113 +83,6 @@ describe("async & oop & closure", () => {
     //         console.log(res.response.headers.get('content-type'));
   });
 
-  function getType(thing) {
-    return thing.constructor.name;
-  }
-  it("test-declarative-object-create-method-object-literal", () => {
-    var company = {
-      name: "Astri",
-      employee: {
-        name: "jeff chung"
-      }
-    };
-
-    expect("Astri").toBe(company.name);
-    expect("Object").toBe(getType(company));
-  });
-  it("test-procedure-object-create", () => {
-    function Company() {
-      this.name = "Astri";
-      this.employee = "jeff chung";
-    }
-    var company = new Company();
-    expect("Astri").toBe(company.name);
-    expect("Company").toBe(getType(company));
-  });
-  it("test-2-same-method-from-same-constructor-object-create-actually-is-different", () => {
-    function Company(name, employee) {
-      this.name = name;
-      this.employee = employee;
-      this.info = function() {
-        LOGV(this.name + this.employee);
-      };
-    }
-    var company1 = new Company("Astri", "jeff chung");
-    var company2 = new Company("Astri2", "sss");
-    //always remember that js function is complex data(so seperate)& executable
-    expect(company1.info !== company2.info).toBe(true);
-    expect("Astri").toBe(company1.name);
-  });
-  it("test-2-same-method-from-same-constructor-object-create-actually-is-different-sol-direct-point", () => {
-    function info() {
-      LOGV(this.name + this.employee);
-    }
-    function Company(name, employee) {
-      this.name = name;
-      this.employee = employee;
-      this.info = info;
-    }
-    var company1 = new Company("Astri", "jeff chung");
-    var company2 = new Company("Astri2", "sss");
-    //always remember that js function is complex data(so seperate)& executable
-    expect(company1.info === company2.info).toBe(true);
-    expect("Astri").toBe(company1.name);
-  });
-  it("test-2-same-method-from-same-constructor-object-create-actually-is-different-sol-prototype", () => {
-    function Company(name, employee) {
-      this.name = name;
-      this.employee = employee;
-    }
-    //every function have a common(share same memory)&predefined object property,Call **prototype**
-    //if it is used as constructor,it will be the prototype of object
-    Company.prototype.info = function() {
-      LOGV(this.name + this.employee);
-    };
-    var company1 = new Company("Astri", "jeff chung");
-    var company2 = new Company("Astri2", "sss");
-    //always remember that js function is complex data(so seperate)& executable
-    expect(company1.info === company2.info).toBe(true);
-    expect("Astri").toBe(company1.name);
-  });
-  it("test-prototype-inheritance", () => {
-    function Company(name, employee) {
-      this.name = name;
-      this.employee = employee;
-    }
-    Company.prototype.info = function() {
-      LOGV(this.name + this.employee);
-    };
-    function GovernmentCompany(name, employee) {
-      Company.call(this, name, employee);
-      this.name = "government" + this.name;
-      this.employee = "government" + this.employee;
-    }
-    //Object-create = special way to create prototype object with specific prototype of function,if it is assign to prototype of another function,then prototype inheriance chain create
-    GovernmentCompany.prototype = Object.create(Company.prototype);
-
-    GovernmentCompany.prototype.constructor = GovernmentCompany;
-    //dynamic add method to close
-    GovernmentCompany.prototype.close = function() {
-      return false;
-    };
-    var company1 = new Company("Astri", "jeff chung");
-    var company2 = new GovernmentCompany("Astri2", "sss");
-    // same inheriance function template& same inheriance memory
-    expect(company1.info === company2.info).toBe(true);
-
-    expect("Astri").toBe(company1.name);
-    expect("governmentAstri2").toBe(company2.name);
-    expect(company1 instanceof Company).toBe(true);
-    expect(company2 instanceof GovernmentCompany).toBe(true);
-    expect(company2 instanceof Company).toBe(true);
-    expect(company2.close()).toBe(false);
-    var fakeCompany = {
-      name: "fake ss"
-    };
-    expect(fakeCompany instanceof Company).toBe(false);
-    Object.setPrototypeOf(fakeCompany, Company.prototype);
-    expect(fakeCompany instanceof Company).toBe(true);
-  });
   it("test-internal-function", () => {
     function betterExampleNeeded() {
       var a = 1;
@@ -205,81 +98,7 @@ describe("async & oop & closure", () => {
     expect(typeof oneMoreThanA === "function").toBe(false);
   });
   //In javascript.a  function that make function,the maked function remember the scope that are created
-  it("test-closure", () => {
-    function makeAdder(baseNum) {
-      return function(numBeingAdded) {
-        return baseNum + numBeingAdded;
-      };
-    }
-
-    var add5er = makeAdder(5);
-    var add20er = makeAdder(20); // ?
-    //add5er and add20er are closure,they remember the scope of 5&10 for its a
-    expect(11).toBe(add5er(6));
-    //no people can run time change the adder of add 20
-    expect(27).toBe(add20er(7));
-    expect(27).toBe(add20er(7));
-    //OOP implementation
-    class Adder {
-      constructor(baseNum) {
-        this.baseNum = baseNum;
-      }
-      execute(numBeingAdded) {
-        return this.baseNum + numBeingAdded;
-      }
-    }
-
-    var addO5er = new Adder(5);
-    var addO20er = new Adder(20); // ?
-    expect(11).toBe(addO5er.execute(6));
-    //the adder base num is accessable via addO5er .And still run time changable.(lower the readability)
-    expect(27).toBe(addO20er.execute(7));
-    expect(27).toBe(addO20er.execute(7));
-  });
-  it("test-o", () => {
-    function O(a, b) {
-      this.a = a;
-      this.b = b;
-    }
-    O.prototype.b = 3;
-    O.prototype.c = 4;
-
-    let o = new O(1, 2);
-
-    let o2 = new O(10, 20);
-
-    expect(1).toBe(o.a);
-    //
-    expect(2).toBe(o.b);
-
-    expect(4).toBe(o.c);
-    O.prototype.c = 16;
-    expect(10).toBe(o2.a);
-    //
-    expect(20).toBe(o2.b);
-    //using same type of memory of prototype
-    expect(16).toBe(o2.c);
-    expect(16).toBe(o.c);
-  });
-  it("test-weird", () => {
-    var o = {
-      a: 2,
-      m: function() {
-        return this.a + 1;
-      }
-    };
-    expect(3).toBe(o.m());
-    // console.log(o.m()); // 3  t.is(3,o.m());
-
-    // 当调用 o.m 时,'this'指向了o.
-
-    var p = Object.create(o);
-    // p is a object with prototype o.
-    expect(2).toBe(p.a);
-
-    p.a = 12; // 创建 p 的自身属性a.
-    expect(13).toBe(p.m());
-  });
+  
   it("test-es-6-sugar", () => {
     class Company {
       constructor(name, employee) {

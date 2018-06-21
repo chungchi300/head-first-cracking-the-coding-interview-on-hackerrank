@@ -1,13 +1,4 @@
 describe("basic", () => {
-  it("for of", () => {
-    let arr = [1, 2, 3, 4];
-    let sum = 0;
-    for (let num of arr) {
-      sum += num;
-    }
-
-    expect(sum).toBe(10);
-  });
   it("for ", () => {
     let arr = [1, 2, 3, 4];
     let sum = 0;
@@ -16,6 +7,27 @@ describe("basic", () => {
     }
     expect(sum).toBe(10);
   });
+  it("for of array", () => {
+    let arr = [1, 2, 3, 4];
+    let sum = 0;
+    for (let num of arr) {
+      sum += num;
+    }
+
+    expect(sum).toBe(10);
+  });
+  it("for of object", () => {
+    const me_obj = {
+      name: "Doomed1993",
+      activity: "Sleeping"
+    };
+    let result = [];
+    for (let property in me_obj) {
+      result.push(me_obj[property]);
+    }
+    expect(result).toEqual(["Doomed1993", "Sleeping"]);
+  });
+
   it("array foreach", () => {
     let arr = [1, 2, 3, 4];
     let sum = 0;
