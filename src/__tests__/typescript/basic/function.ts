@@ -32,8 +32,21 @@ describe("basic", () => {
     }
     expect(hello(getName)).toBe("jeff chung");
   });
-  it("function with specific signature", () => {
+  it("function with anonymous specific signature", () => {
     function hello(callback: (id: number) => string): string {
+      return callback(1);
+    }
+    function getName(id: number) {
+      if (id == 1) {
+        return "jeff chung";
+      }
+      return "other";
+    }
+    expect(hello(getName)).toBe("jeff chung");
+  });
+  it("function with anonymous specific signature", () => {
+    type idToNameMappingFunction = (id: number) => string;
+    function hello(callback): string {
       return callback(1);
     }
     function getName(id: number) {
