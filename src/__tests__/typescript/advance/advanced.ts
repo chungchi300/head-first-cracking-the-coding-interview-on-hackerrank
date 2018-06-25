@@ -2,7 +2,7 @@ describe("object spread", () => {
   it("spread and rest", () => {
     //anonymous type id and name
     let firstObj = { id: 1, name: "firstObj" };
-    //the Spreading of existing variable will get it's type
+    //the Spreading of existing variable will get it's type(an anonymous interface)
     let secondObj = { ...firstObj };
     // secondObj.d = 'd'; is forbidden
     /*

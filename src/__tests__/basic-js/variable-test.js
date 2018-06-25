@@ -49,6 +49,10 @@ describe("variable ", () => {
     let d;
     let e = false;
     let f = new Object();
+    let g = new Array();
+    let t = function() {
+      return "d";
+    };
     expect(typeof a).toBe("string");
     expect(typeof b).toBe("number");
     //WARNING type of null is object !!!
@@ -56,9 +60,17 @@ describe("variable ", () => {
     expect(typeof d).toBe("undefined");
     expect(typeof e).toBe("boolean");
     expect(typeof f).toBe("object");
+    expect(typeof g).toBe("object");
+    expect(typeof t).toBe("function");
+
     expect(a instanceof Object).toBe(false);
     expect(c instanceof Object).toBe(false);
     expect(f instanceof Object).toBe(true);
+    //Prototype chain of reference value
+    expect(g instanceof Object).toBe(true);
+    expect(g instanceof Array).toBe(true);
+    expect(t instanceof Object).toBe(true);
+    expect(t instanceof Function).toBe(true);
   });
   it("scope chain and execution context global and function", () => {
     var color = "blue";
