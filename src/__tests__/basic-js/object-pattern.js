@@ -110,6 +110,7 @@ describe("oop ", () => {
         }
       };
     }
+    //create constructor,its closure not create now,need more study
     //every function have a common(share same memory)&predefined object property,Call **prototype**
     //if it is used as constructor,it will be the prototype of object
 
@@ -137,7 +138,7 @@ describe("oop ", () => {
     /*https://stackoverflow.com/questions/7471349/why-module-pattern*/
     var Company = (function() {
       var id = 22;
-      function Company(name, employee, id) {
+      function Company(name, employee) {
         this.name = name;
         this.employee = employee;
         Company.prototype.info = function() {
@@ -153,16 +154,17 @@ describe("oop ", () => {
       }
       return Company;
     })();
-
-    var company1 = new Company("Astri", "jeff chung", "#1");
-    var company2 = new Company("Astri2", "sss", "#2");
+    //created constructor function and its related closure now
+    var company1 = new Company("Astri", "jeff chung");
+    var company2 = new Company("Astri2", "sss");
     //you cannot change the id of company,you are not manipulating the this plain object
 
     /**
      * in javascript,a complete object memory space is the this+it's related closure
      *
      */
-    company1.id = "dd";
+    company1.setId("#1");
+    company2.setId("#2");
     //every reference values created by reference type has a prototype variable for evaluation
     expect(company1.info === company2.info).toBe(true);
     expect("Astri").toBe(company1.name);
