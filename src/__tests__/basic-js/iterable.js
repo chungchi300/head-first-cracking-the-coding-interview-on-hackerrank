@@ -16,17 +16,6 @@ describe("basic", () => {
 
     expect(sum).toBe(10);
   });
-  it("for of object", () => {
-    const me_obj = {
-      name: "Doomed1993",
-      activity: "Sleeping"
-    };
-    let result = [];
-    for (let property in me_obj) {
-      result.push(me_obj[property]);
-    }
-    expect(result).toEqual(["Doomed1993", "Sleeping"]);
-  });
 
   it("array foreach", () => {
     let arr = [1, 2, 3, 4];
@@ -47,7 +36,7 @@ describe("basic", () => {
     }
     expect(result).toEqual(["name", "activity"]);
   });
-  it("for in array,proven again array is just numbered index object in javascript", () => {
+  it("for in array,proven again array is reference values with Object prototype", () => {
     let arr = [1, 2, 3, 4];
     let indexes = [];
     for (let num in arr) {

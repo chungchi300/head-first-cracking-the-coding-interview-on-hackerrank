@@ -95,7 +95,7 @@ describe("oop ", () => {
     expect(company1.info === company2.info).toBe(true);
     expect("Astri").toBe(company1.name);
   });
-  it("Constructor for variable& Prototype pattern for function&closure pattern for protected variable", () => {
+  it("Constructor for variable& Prototype pattern for function&closure pattern for protected variable,closure created when constructor is called", () => {
     function Company(name, employee, id) {
       this.name = name;
       this.employee = employee;
@@ -132,6 +132,43 @@ describe("oop ", () => {
     /*
       hard to log the variable in closure space
     */
+  });
+  it("module pattern in object ,IIFE closure,closure created when function is created", () => {
+    /*https://stackoverflow.com/questions/7471349/why-module-pattern*/
+    var Company = (function() {
+      var id = 22;
+      function Company(name, employee, id) {
+        this.name = name;
+        this.employee = employee;
+        Company.prototype.info = function() {
+          return this.name + this.employee + id;
+        };
+        Company.prototype.setId = function(newId) {
+          if (newId == "#3") {
+            id = "#specialId";
+          } else {
+            id = newId;
+          }
+        };
+      }
+      return Company;
+    })();
+
+    var company1 = new Company("Astri", "jeff chung", "#1");
+    var company2 = new Company("Astri2", "sss", "#2");
+    //you cannot change the id of company,you are not manipulating the this plain object
+
+    /**
+     * in javascript,a complete object memory space is the this+it's related closure
+     *
+     */
+    company1.id = "dd";
+    //every reference values created by reference type has a prototype variable for evaluation
+    expect(company1.info === company2.info).toBe(true);
+    expect("Astri").toBe(company1.name);
+    expect("Astrijeff chung#2").toBe(company1.info());
+    company1.setId("#3");
+    expect("Astrijeff chung#specialId").toBe(company1.info());
   });
   it("test-prototype-inheritance", () => {
     function Company(name, employee) {
@@ -227,15 +264,15 @@ describe("es6", () => {
         return this.givenName + this.sureName;
       }
       set fullName(fullName) {
-        if (!validator.contains(fullName, " ")) {
+        if (!fullName.includes(" ")) {
           throw new Error("fullName have no space");
         }
         this.givenName = fullName.split(" ")[0];
         this.sureName = fullName.split(" ")[1];
       }
       set age(age) {
-        if (!validator.isInt(age + "")) {
-          throw new Error("age is not integer");
+        if (typeof age != "number") {
+          throw new Error("age is not number");
         }
         this._age = age;
       }
