@@ -134,9 +134,10 @@ describe("oop ", () => {
       hard to log the variable in closure space
     */
   });
-  it("module pattern in object ,IIFE closure,closure created when function is created", () => {
+  it("module pattern in object = IIFE closure ,closure created when function is created", () => {
     /*https://stackoverflow.com/questions/7471349/why-module-pattern*/
     var Company = (function() {
+      //private = own memory space,no global reference,called by object itself, closure can satisfy all of it
       var id = 22;
       function Company(name, employee) {
         this.name = name;
