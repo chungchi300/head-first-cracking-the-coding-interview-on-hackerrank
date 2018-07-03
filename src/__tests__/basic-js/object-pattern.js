@@ -340,4 +340,24 @@ describe("es6", () => {
     expect(jeff.sureName).toBe("superjeff");
     expect(jeff.fullName).toBe("jeffchung");
   });
+
+  it("partial match", () => {
+    const houseForSale = {
+      bath: true,
+      bedrooms: 4,
+      kitchen: {
+        amenities: ["oven", "stove", "washer"],
+        area: 20,
+        wallColor: "white"
+      }
+    };
+    const desiredHouse = {
+      bath: true,
+      kitchen: {
+        amenities: ["oven", "stove", "washer"]
+      }
+    };
+
+    expect(houseForSale).toMatchObject(desiredHouse);
+  });
 });
