@@ -14,7 +14,7 @@
 
 # Goal
 
-Better 思维过程,
+Better 思维过程 ,
 
 # properties of emphasis 思维过程
 
