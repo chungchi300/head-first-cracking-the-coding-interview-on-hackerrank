@@ -1,3 +1,4 @@
+var util = require("util");
 describe("extra", () => {
   it("object-literal", () => {
     var company = {
@@ -41,7 +42,7 @@ describe("oop ", () => {
     }
     var company1 = createCompany("Astri", "jeff chung");
     var company2 = createCompany("Astri2", "sss");
-    //Disadvantage :Identification of creator reference types by instance of
+    //Disadvantage :No Identification of creator reference types by instance of
     expect("Astri").toBe(company1.name);
   });
   it("constructor pattern", () => {
@@ -136,9 +137,11 @@ describe("oop ", () => {
   });
   it("module pattern in object = IIFE closure ,closure created when function is created", () => {
     /*https://stackoverflow.com/questions/7471349/why-module-pattern*/
-    var Company = (function() {
+    var CompanyModule = (function() {
       //private = own memory space,no global reference,called by object itself, closure can satisfy all of it
+      //I can fuck this id memory space as much as I want
       var id = 22;
+
       function Company(name, employee) {
         this.name = name;
         this.employee = employee;
@@ -153,11 +156,12 @@ describe("oop ", () => {
           }
         };
       }
-      return Company;
+      const name = "author";
+      return { Company: Company, name: name };
     })();
     //created constructor function and its related closure now
-    var company1 = new Company("Astri", "jeff chung");
-    var company2 = new Company("Astri2", "sss");
+    var company1 = new CompanyModule.Company("Astri", "jeff chung");
+    var company2 = new CompanyModule.Company("Astri2", "sss");
     //you cannot change the id of company,you are not manipulating the this plain object
 
     /**
@@ -177,6 +181,7 @@ describe("oop ", () => {
     function Company(name, employee) {
       this.name = name;
       this.employee = employee;
+      this.boss = "jeff";
     }
     Company.prototype.info = function() {
       LOGV(this.name + this.employee);
@@ -188,7 +193,7 @@ describe("oop ", () => {
     }
     //Object-create = special way to create prototype object with specific prototype of function,if it is assign to prototype of another function,then prototype inheriance chain create
     GovernmentCompany.prototype = Object.create(Company.prototype);
-
+    //resetting
     GovernmentCompany.prototype.constructor = GovernmentCompany;
     //dynamic add method to close
     GovernmentCompany.prototype.close = function() {
@@ -205,6 +210,8 @@ describe("oop ", () => {
     expect(company2 instanceof GovernmentCompany).toBe(true);
     expect(company2 instanceof Company).toBe(true);
     expect(company2.close()).toBe(false);
+    expect(company1.boss).toBe("jeff");
+    expect(company2.boss).toBe("jeff");
     var fakeCompany = {
       name: "fake ss"
     };
@@ -213,6 +220,7 @@ describe("oop ", () => {
     expect(fakeCompany instanceof Company).toBe(true);
   });
 });
+
 describe("es6", () => {
   it("test-es-6-sugar", () => {
     class Company {
@@ -359,5 +367,33 @@ describe("es6", () => {
     };
 
     expect(houseForSale).toMatchObject(desiredHouse);
+  });
+});
+describe("extra", () => {
+  it("test-util-inheritance", () => {
+    function Company(name, employee) {
+      this.name = name;
+      this.employee = employee;
+      this.boss = "jeff";
+    }
+    Company.prototype.info = function() {
+      return this.name + this.employee;
+    };
+    function GovernmentCompany(name, employee) {
+      this.name = "government" + this.name;
+      this.employee = "government" + this.employee;
+    }
+    //only passed the inherit method of prototype& the prototype chain
+    util.inherits(GovernmentCompany, Company);
+    var company = new Company("Astri", "jeff chung");
+    var governmentCompany = new GovernmentCompany("Astri2", "sss");
+    expect(governmentCompany.name).toBe("governmentundefined");
+    expect(governmentCompany.employee).toBe("governmentundefined");
+    expect(company.info()).toBe("Astrijeff chung");
+    expect(governmentCompany.info()).toBe(
+      "governmentundefinedgovernmentundefined"
+    );
+    expect(company instanceof Company).toBe(true);
+    expect(governmentCompany instanceof GovernmentCompany).toBe(true);
   });
 });
