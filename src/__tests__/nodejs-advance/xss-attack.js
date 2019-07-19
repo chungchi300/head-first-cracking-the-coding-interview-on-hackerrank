@@ -1,0 +1,1 @@
+allow posting content with javascript with anonymous person
