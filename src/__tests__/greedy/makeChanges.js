@@ -59,28 +59,85 @@ describe("greedy", () => {
     expect(makeChanges([1, 6, 10], 12)).toEqual([10, 1, 1]);
   });
 });
-describe("make changes brute force", () => {
-  it("recursive", () => {
+describe.only("make changes brute force", () => {
+  it.only("recursive", () => {
     const coins = [10, 6, 1];
-    function makeChange(value) {
+    function makeChange(nodeValue) {
       //12
       //base case
-      if (value === 0) return 0;
+      if (nodeValue === 0) {
+        console.log("returning 0");
+        return 0;
+      }
       let nodeMinCoin;
       //branching every time¸¸¸¸¸¸¸¸¸
       //it will get each
       coins.forEach(coin => {
         // 10
-        if (value - coin >= 0) {
+        if (nodeValue - coin >= 0) {
           //2
-          let lowerMinCoin = makeChange(value - coin);
+          console.log({ nodeMinCoin, coin });
+          let lowerMinCoin = makeChange(nodeValue - coin);
+
           if (nodeMinCoin === undefined || lowerMinCoin < nodeMinCoin) {
             nodeMinCoin = lowerMinCoin;
           }
         }
       });
+      console.log({ nodeMinCoin, nodeValue });
+      //thats my totally mind game is correct , node value 2=>1, because at the last change will + 1 to make it two if it is the min
+      //the answer is {nodeValue:12,minCoin:1}, and then the finally return +1 => 2
       return nodeMinCoin + 1;
     }
     expect(makeChange(12)).toEqual(2);
+  });
+  it("dynamic programing", () => {
+    const coins = [10, 6, 1];
+    let nodeMinCoinByNodeValue = {};
+    function makeChange(nodeValue) {
+      //12
+      //base case
+      if (nodeMinCoinByNodeValue[nodeValue]) {
+        // console.log("finding and skiping", nodeMinCoinByNodeValue);
+        return nodeMinCoinByNodeValue[nodeValue];
+      }
+
+      if (nodeValue === 0) return 0;
+      let nodeMinCoin;
+      //branching every time¸¸¸¸¸¸¸¸¸
+      //it will get each
+      coins.forEach(coin => {
+        // 10
+        if (nodeValue - coin >= 0) {
+          //2
+          let lowerMinCoin = makeChange(nodeValue - coin);
+          if (nodeMinCoin === undefined || lowerMinCoin < nodeMinCoin) {
+            nodeMinCoin = lowerMinCoin;
+          }
+        }
+      });
+
+      nodeMinCoinByNodeValue[nodeValue] = nodeMinCoin + 1;
+      // console.log({ nodeMinCoin, nodeValue, nodeMinCoinByNodeValue });
+      return nodeMinCoinByNodeValue[nodeValue];
+    }
+
+    let makeChangeRes = makeChange(12);
+    // console.log({ nodeMinCoinByNodeValue });
+    expect(nodeMinCoinByNodeValue).toEqual({
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 1,
+      "7": 2,
+      "8": 3,
+      "9": 4,
+      "10": 1,
+      "11": 2,
+      "12": 2
+    });
+    expect(makeChangeRes).toEqual(2);
   });
 });
