@@ -60,7 +60,7 @@ describe("greedy", () => {
   });
 });
 describe.only("make changes brute force", () => {
-  it.only("recursive", () => {
+  it("recursive", () => {
     const coins = [10, 6, 1];
     function makeChange(nodeValue) {
       //12
@@ -139,5 +139,55 @@ describe.only("make changes brute force", () => {
       "12": 2
     });
     expect(makeChangeRes).toEqual(2);
+  });
+  it.only("deep", () => {
+    var coinChange = function(coins, amount) {
+      //same problem as make changes
+
+      let nodeMinCoinByNodeValue = {};
+      function makeChange(nodeValue) {
+        if (nodeMinCoinByNodeValue[nodeValue]) {
+          return nodeMinCoinByNodeValue[nodeValue];
+        }
+        if (nodeValue == 0) {
+          return 0;
+        }
+        let nodeMinCoin;
+        // console.log({ nodeValue });
+        let hasAcceptableCoin = false;
+        for (let coin of coins) {
+          if (nodeValue - coin >= 0) {
+            let lowerCoin = makeChange(nodeValue - coin);
+            if (lowerCoin != undefined) {
+              if (nodeMinCoin === undefined || lowerCoin < nodeMinCoin) {
+                nodeMinCoin = lowerCoin;
+              }
+              hasAcceptableCoin = true;
+            }
+
+            // console.log({ lowerCoin, nodeMinCoin });
+          }
+        }
+        if (!hasAcceptableCoin) {
+          return undefined;
+        }
+
+        nodeMinCoinByNodeValue[nodeValue] = nodeMinCoin + 1;
+        console.log(nodeMinCoinByNodeValue);
+        return nodeMinCoinByNodeValue[nodeValue];
+      }
+
+      let res = makeChange(amount);
+
+      if (isNaN(res)) {
+        return -1;
+      } else {
+        return res;
+      }
+    };
+    // expect(coinChange([2], 3));
+    expect(coinChange([1, 2], 4)).toEqual(2);
+    expect(coinChange([3, 2], 4)).toEqual(2);
+    expect(coinChange([186, 419, 83, 408], 6249));
   });
 });
