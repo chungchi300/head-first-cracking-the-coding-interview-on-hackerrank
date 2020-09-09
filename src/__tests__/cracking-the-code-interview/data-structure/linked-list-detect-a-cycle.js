@@ -17,14 +17,14 @@ function createSampleList() {
     }
     clockNodes[i].next = clockNodes[i + 1];
   }
-  const cNode = new Node('c', clockNodes[0]);
-  const bNode = new Node('b', cNode);
+  const cNode = new Node("c", clockNodes[0]);
+  const bNode = new Node("b", cNode);
 
-  const aNode = new Node('a', bNode);
+  const aNode = new Node("a", bNode);
   return aNode;
 }
-describe('All', () => {
-  it('All', () => {
+describe("All", () => {
+  it("All", () => {
     /**
     Metaphor,it is like clock,with 1 sec(slow) ,2 sec(fast),
 slow    1   2   3   4
@@ -35,16 +35,17 @@ diff    59  58  57  56
    a,b,c, 1,2,3,4,5...60(and it point to 1)
     **/
     function hasCycle(node) {
-      if (node.next == null) {
+      if (node === null || node.next === null) {
         return false;
       }
       let slow = node;
       let fast = node.next;
-      while (slow != fast) {
-        if (fast == null || fast.next == null) return false;
+      while (slow !== fast) {
+        if (fast === null || fast.next === null) return false;
         slow = slow.next;
         fast = fast.next.next;
       }
+
       return true;
     }
     var nodeA = createSampleList();
