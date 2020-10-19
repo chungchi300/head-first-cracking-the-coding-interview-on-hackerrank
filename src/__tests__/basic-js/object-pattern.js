@@ -4,8 +4,8 @@ describe("extra", () => {
     var company = {
       name: "Astri",
       employee: {
-        name: "jeff chung"
-      }
+        name: "jeff chung",
+      },
     };
 
     expect("Astri").toBe(company.name);
@@ -35,7 +35,7 @@ describe("oop ", () => {
       let object = new Object();
       object.name = name;
       object.employee = employee;
-      object.info = function() {
+      object.info = function () {
         LOGV(object.name + object.employee);
       };
       return object;
@@ -51,7 +51,7 @@ describe("oop ", () => {
       console.log("this", this);
       this.name = name;
       this.employee = employee;
-      this.info = function() {
+      this.info = function () {
         LOGV(this.name + this.employee);
       };
       console.log("this", this);
@@ -87,7 +87,7 @@ describe("oop ", () => {
     }
     //every function have a common(share same memory)&predefined object property,Call **prototype**
     //if it is used as constructor,it will be the prototype of object
-    Company.prototype.info = function() {
+    Company.prototype.info = function () {
       LOGV(this.name + this.employee);
     };
     var company1 = new Company("Astri", "jeff chung");
@@ -100,10 +100,10 @@ describe("oop ", () => {
     function Company(name, employee, id) {
       this.name = name;
       this.employee = employee;
-      Company.prototype.info = function() {
+      Company.prototype.info = function () {
         return this.name + this.employee + id;
       };
-      Company.prototype.setId = function(newId) {
+      Company.prototype.setId = function (newId) {
         if (newId == "#3") {
           id = "#specialId";
         } else {
@@ -135,9 +135,29 @@ describe("oop ", () => {
       hard to log the variable in closure space
     */
   });
-  it("module pattern in object = IIFE closure ,closure created when function is created", () => {
-    /*https://stackoverflow.com/questions/7471349/why-module-pattern*/
-    var CompanyModule = (function() {
+  it("closure pattern", () => {
+    (function () {
+      let name = "";
+      var Person = function (value) {
+        name = value;
+      };
+      Person.prototype.getName = function () {
+        return name;
+      };
+      Person.prototype.setName = function (value) {
+        name = value;
+      };
+    })();
+    let person1 = new Person("Nicholas");
+    console.log(person1.getName()); // 'Nicholas'
+    person1.setName("Matt");
+    console.log(person1.getName()); // 'Matt'
+    let person2 = new Person("Michael");
+    console.log(person1.getName()); // 'Michael'
+    console.log(person2.getName()); // 'Michael'
+  });
+  it("single instance enhance pattern", () => {
+    var SingleStrongCompany = (function () {
       //private = own memory space,no global reference,called by object itself, closure can satisfy all of it
       //I can fuck this id memory space as much as I want
       var id = 22;
@@ -145,10 +165,38 @@ describe("oop ", () => {
       function Company(name, employee) {
         this.name = name;
         this.employee = employee;
-        Company.prototype.info = function() {
+        Company.prototype.info = function () {
           return this.name + this.employee + id;
         };
-        Company.prototype.setId = function(newId) {
+        Company.prototype.setId = function (newId) {
+          if (newId == "#3") {
+            id = "#specialId";
+          } else {
+            id = newId;
+          }
+        };
+      }
+      let company = new Company(name, employee);
+      company.earn = function () {
+        return 1000;
+      };
+      return company;
+    })();
+  });
+  it("module pattern in object = IIFE closure ,closure created when function is created", () => {
+    /*https://stackoverflow.com/questions/7471349/why-module-pattern*/
+    var CompanyModule = (function () {
+      //private = own memory space,no global reference,called by object itself, closure can satisfy all of it
+      //I can fuck this id memory space as much as I want
+      var id = 22;
+
+      function Company(name, employee) {
+        this.name = name;
+        this.employee = employee;
+        Company.prototype.info = function () {
+          return this.name + this.employee + id;
+        };
+        Company.prototype.setId = function (newId) {
           if (newId == "#3") {
             id = "#specialId";
           } else {
@@ -183,7 +231,7 @@ describe("oop ", () => {
       this.employee = employee;
       this.boss = "jeff";
     }
-    Company.prototype.info = function() {
+    Company.prototype.info = function () {
       LOGV(this.name + this.employee);
     };
     function GovernmentCompany(name, employee) {
@@ -196,7 +244,7 @@ describe("oop ", () => {
     //resetting
     GovernmentCompany.prototype.constructor = GovernmentCompany;
     //dynamic add method to close
-    GovernmentCompany.prototype.close = function() {
+    GovernmentCompany.prototype.close = function () {
       return false;
     };
     var company1 = new Company("Astri", "jeff chung");
@@ -213,7 +261,7 @@ describe("oop ", () => {
     expect(company1.boss).toBe("jeff");
     expect(company2.boss).toBe("jeff");
     var fakeCompany = {
-      name: "fake ss"
+      name: "fake ss",
     };
     expect(fakeCompany instanceof Company).toBe(false);
     Object.setPrototypeOf(fakeCompany, Company.prototype);
@@ -356,14 +404,14 @@ describe("es6", () => {
       kitchen: {
         amenities: ["oven", "stove", "washer"],
         area: 20,
-        wallColor: "white"
-      }
+        wallColor: "white",
+      },
     };
     const desiredHouse = {
       bath: true,
       kitchen: {
-        amenities: ["oven", "stove", "washer"]
-      }
+        amenities: ["oven", "stove", "washer"],
+      },
     };
 
     expect(houseForSale).toMatchObject(desiredHouse);
@@ -376,7 +424,7 @@ describe("extra", () => {
       this.employee = employee;
       this.boss = "jeff";
     }
-    Company.prototype.info = function() {
+    Company.prototype.info = function () {
       return this.name + this.employee;
     };
     function GovernmentCompany(name, employee) {
