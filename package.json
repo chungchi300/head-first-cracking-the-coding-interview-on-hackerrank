@@ -17,7 +17,7 @@
     "flow-bin": "^0.36.0",
     "immutability-helper": "^2.1.2",
     "immutable": "^3.8.1",
-    "jsdom": "^11.0.0",
+    "jsdom": "^16.5.0",
     "lodash": "^4.17.2",
     "react": "^15.6.1",
     "react-addons-pure-render-mixin": "^15.6.0",
